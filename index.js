@@ -1,13 +1,16 @@
 var rect = require('./rectangle')
 
 function calculateRectangle(l, w) {
-    console.log('Rectangle with length=' + l + ' and width=' + w + ' :')
-    if (l <= 0 || w <= 0)
-        console.log('Invalid size')
-    else {
-        console.log('Perimeter: ' + rect.perimeter(l,w))
-        console.log('Area: ' + rect.area(l,w))
-    }
+    console.log('Calculate rectangle l = ' + l + ' and w = ' + w)
+    rect.calc(l, w, (error, rectangle) => {
+        if (error != null)
+            console.log(error.message)
+        else if (rectangle != null) {
+            console.log('Perimeter = ' + rectangle.perimeter())
+            console.log('Area = ' + rectangle.area())
+        }
+    })
+    console.log('This statement write after the rect fuction call')
 }
 
 calculateRectangle(2,3)
