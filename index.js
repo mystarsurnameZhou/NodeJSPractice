@@ -9,60 +9,26 @@ const bodyParser = require('body-parser')
 
 const http = require('http')
 
+const dishRouter = require('./routes/dishRouter')
+
 const hostname = 'localhost'
 const port = 3000
 
 const app = express();  //this means our application is going to use
-                        //the Express application exported from Express
-                        //node module
+//the Express application exported from Express
+//node module
 
-app.use(morgan('dev'))
-app.use(bodyParser.json())
+// this Express application use these middleware
+app.use(morgan('dev'))      // allow to log the request to the console
+app.use(bodyParser.json()) // allow to parse the body of the request message,
+                           // which is formatted in JSON format
 
-app.all('/dishes', (req,res,next) => {
-    res.statusCode = 200
-    res.setHeader('Content-Type', 'text/plain')
-    next()
-})
+app.use('/dishes', dishRouter)
+// mount the router at an endpoint
+// this means any requests come to the '/dishes' endpoint will be sent
+// over to this router and will be handled by this
 
-app.get('/dishes', (req,res,next) => {
-    res.end('Will send all the dishes to you!')
-})
-
-app.post('/dishes', (req,res,next) => {
-    res.end('Will add the dish: ' + req.body.name + ' with details: ' +
-    req.body.description + ' for you')
-})
-
-app.put('/dishes', (req,res,next) => {
-    res.statusCode = 403
-    res.end('PUT operation not supported on /dishes')
-})
-
-app.delete('/dishes', (req,res,next) => {
-    res.end('Deleting all dishes')
-})
-
-app.get('/dishes/:dishId', (req,res,next) => {
-    res.end('Will send details of the dish: ' + req.params.dishId + ' to you!')
-})
-
-app.post('/dishes/:dishId', (req,res,next) => {
-    res.statusCode = 403
-    res.end('POST operation not supported on /dishes/' + req.params.dishId)
-})
-
-app.put('/dishes/:dishId', (req,res,next) => {
-    res.write('Updating the dish: ' + req.params.dishId + '\n')
-    res.end('Will update the dish: ' + req.body.name +
-    ' with details: ' + req.body.description)
-})
-
-app.delete('/dishes/:dishId', (req,res,next) => {
-    res.end('Deleting dish: ' + req.params.dishId)
-})
-
-app.use(express.static(__dirname + '/public'))
+app.use(express.static(__dirname + '/public')) // serves the static files in public folder
 
 app.use((req, res, next) => {
     console.log(req.headers);
