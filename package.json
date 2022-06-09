@@ -1,0 +1,23 @@
+{
+  "name": "rest_api_sample",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index"
+  },
+  "keywords": [
+    "nodejs",
+    "rest",
+    "api",
+    "dishes",
+    "coursera"
+  ],
+  "author": "livwinton",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1",
+    "morgan": "^1.10.0"
+  }
+}
